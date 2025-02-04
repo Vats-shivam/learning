@@ -3,25 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
+    <title>Vue Blog</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>My Blog</h1>
-        </header>
-        
-        <div class="create-post">
-            <h2>Create New Post</h2>
-            <form id="post-form">
-                <input type="text" id="title" placeholder="Post Title" required>
-                <textarea id="content" placeholder="Post Content" required></textarea>
-                <button type="submit">Publish</button>
-            </form>
-        </div>
+    <div id="app">
+        <div class="container">
+            <header>
+                <h1>Vue Blog</h1>
+            </header>
+            
+            <div class="create-post">
+                <h2>Create New Post</h2>
+                <form @submit.prevent="createPost">
+                    <input v-model="formData.title" type="text" placeholder="Post Title" required>
+                    <textarea v-model="formData.content" placeholder="Post Content" required></textarea>
+                    <button type="submit">Publish</button>
+                </form>
+            </div>
 
-        <div class="posts" id="posts-container"></div>
+            <div class="posts">
+                <article v-for="post in posts" :key="post.id" class="post">
+                    <h2>{{ post.title }}</h2>
+                    <div class="post-date">{{ formatDate(post.date) }}</div>
+                    <p>{{ post.content }}</p>
+                </article>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
